@@ -2,7 +2,7 @@
 
 A homework assignment.
 
-# Topic 
+# Topic: 
 Creating our own Planning Poker application for an IT company. This is the client part. The admin can be found [here](https://github.com/naghim/PlanningPokerProject).
 
 # Requirements:
