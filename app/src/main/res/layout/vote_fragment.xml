@@ -5,19 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    app:layout_constraintBottom_toTopOf="@+id/button"
+    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
     android:background="@drawable/bg"
     >
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-
-
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/questionTextView"
         android:layout_width="365dp"
         android:layout_height="83dp"
         android:layout_marginTop="32dp"
@@ -27,25 +24,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="364dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="40dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="412dp"
         android:layout_height="1000dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/questionTextView">
 
         <GridLayout
             android:id="@+id/mainGrid"
@@ -57,15 +43,13 @@
             android:columnOrderPreserved="false"
             android:padding="14dp"
             android:rowCount="3"
-            app:layout_constraintBottom_toTopOf="@+id/button"
-
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/questionTextView">
             <!-- Row 1 -->
-
             <!-- Column 1 -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
+                android:id="@+id/one_card"
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
@@ -98,9 +82,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
             <!-- Column 2 -->
@@ -136,9 +118,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
 
@@ -177,9 +157,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -214,9 +192,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -251,9 +227,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -288,9 +262,7 @@
                             android:textColor="@android:color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
-
                     </LinearLayout>
-
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -325,47 +297,7 @@
                             android:textColor="@android:color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
-
                     </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_margin="16dp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/thirtyfour" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Me"
-                            android:textAlignment="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -400,13 +332,9 @@
                             android:textColor="@android:color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
-
                     </LinearLayout>
-
                 </androidx.cardview.widget.CardView>
-
         </GridLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

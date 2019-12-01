@@ -8,13 +8,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.planningpokerprojectclient.Model.User;
+import com.example.planningpokerprojectclient.Model.UserVote;
 
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecycleViewHolderUser> {
 
-    private List<User> mRecyclerItemArrayList;
+    private List<UserVote> mRecyclerItemArrayList;
 
     public static class RecycleViewHolderUser extends RecyclerView.ViewHolder{
 
@@ -28,7 +28,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         }
     }
 
-    public RecyclerAdapter(List<User> recyclerItemArrayList){
+    public RecyclerAdapter(List<UserVote> recyclerItemArrayList){
         this.mRecyclerItemArrayList = recyclerItemArrayList;
     }
 
@@ -42,7 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.RecycleViewHolderUser holder, int position) {
-        User currentItem = mRecyclerItemArrayList.get(position);
+        UserVote currentItem = mRecyclerItemArrayList.get(position);
         if (currentItem !=null){
             holder.mUserNameTextView.setText(currentItem.getName());
             holder.mValueTextView.setText(String.valueOf(currentItem.getValue()));

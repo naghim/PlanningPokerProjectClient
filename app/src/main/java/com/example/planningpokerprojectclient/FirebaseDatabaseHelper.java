@@ -1,78 +1,68 @@
 package com.example.planningpokerprojectclient;
 
-import androidx.annotation.NonNull;
-
-import com.example.planningpokerprojectclient.Model.Group;
 import com.example.planningpokerprojectclient.Model.Question;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.planningpokerprojectclient.Model.UserVote;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class FirebaseDatabaseHelper {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
-    private List<Question> questions;
 
-    public interface DataStatus{
-        void DataIsLoaded(List<Question> items, List<String> keys);
-        void DataIsInserted();
-        void DataIsUpdated();
-    }
 
     public FirebaseDatabaseHelper(){
-        mDatabase = FirebaseDatabase.getInstance();
-        mReference = mDatabase.getReference("groups");
-        questions = new ArrayList<>();
     }
 
-    public void readAllQuestions(final DataStatus dataStatus){
-        mReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                questions.clear();
-                List<String> keys = new ArrayList<>();
-                for (DataSnapshot keyNode: dataSnapshot.getChildren()){
-                    keys.add(keyNode.getKey());
-                    Question item = keyNode.getValue(Question.class);
-                    questions.add(item);
-                }
-
-                dataStatus.DataIsLoaded(questions,keys);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public void addQuestion(Group group, final DataStatus dataStatus){
-        String key = mReference.push().getKey();
-        mReference.child(key).setValue(group)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+    public void readAllQuestions(String groupName, final String questionText, final List<UserVote> voteList){
+        mReference = FirebaseDatabase.getInstance().getReference();//ezzel ferunk hozza
+        mReference.child("groups")
+                .child(groupName)
+                .child("questions")
+                .addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        dataStatus.DataIsInserted();
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //ez csinal egy masolatot es itt toltom le az adatokat
+                        for (DataSnapshot iter : dataSnapshot.getChildren()) {/**/
+                            Question question = iter.getValue(Question.class);
+                            if (question.getQuestionText().equals(questionText)){
+                                for (UserVote user : question.getUser_resp()){
+                                    if (user != null) {
+                                        voteList.add(user);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //ha nem sikerul az adat lekerdezes
+                        throw databaseError.toException();
                     }
                 });
     }
 
-    public void addGroup(String groupName, final DataStatus dataStatus){
-        String key = mReference.push().getKey();
-        mReference.child(key).setValue(groupName)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        dataStatus.DataIsInserted();
-                    }
-                });
+    public void addVote(UserVote vote,String groupName, final String questionText)
+    {
+        String cQuestionID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        String cUser = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+
+        DatabaseReference addQuestionDatabaseReference = FirebaseDatabase.getInstance()
+                .getReference("groups").child(groupName).child("questions").child(Globals.getInstance().getGroupName());
+        addQuestionDatabaseReference.child("user_resp").child(cUser).child("name").setValue(vote.getName());
+        addQuestionDatabaseReference.child("user_resp").child(cUser).child("value").setValue(vote.getValue());
+
+        Globals.getInstance().setLastVotedQuestion(questionText);
     }
 
+    public String getActiveQuestionByGroup() {
+        return Globals.getInstance().getQuestionText();
+    }
 }

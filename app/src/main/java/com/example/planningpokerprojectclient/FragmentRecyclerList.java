@@ -2,18 +2,19 @@ package com.example.planningpokerprojectclient;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.planningpokerprojectclient.Model.User;
+import com.example.planningpokerprojectclient.Model.Question_Has;
+import com.example.planningpokerprojectclient.Model.UserVote;
 import com.example.planningpokerprojectclient.Model.Question;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,10 +29,10 @@ public class FragmentRecyclerList extends Fragment {
 
     private RecyclerView mMy_recycler_view_users;
     private DatabaseReference databaseReference;//ramutatunk ezzel egy cimre
-    private Globals globals = Globals.getInstance();
+    private Globals globals;
     private RecyclerAdapter mAdapterUser;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<User> userRecycleArrayList;
+    private List<UserVote> userRecycleArrayList;
     private Context mContext;
 
     @Override
@@ -39,6 +40,7 @@ public class FragmentRecyclerList extends Fragment {
         // Defines the xml file for the fragment
         final View view = inflater.inflate(R.layout.recycler_view, parent, false);
 
+        this.globals = Globals.getInstance();
         this.createRecycleList();
         this.mContext = getContext();
         this.buildRecycleView(view);
@@ -52,33 +54,37 @@ public class FragmentRecyclerList extends Fragment {
     }
 
     public void getAllData(){
+        userRecycleArrayList.clear();
         databaseReference = FirebaseDatabase.getInstance().getReference();//ezzel ferunk hozza
+        Toast.makeText(this.getContext(), globals.getGroupName(), Toast.LENGTH_LONG);
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot iter : dataSnapshot.getChildren()) {/**/
+                    Question_Has question = iter.getValue(Question_Has.class);
+
+                   // if (question.getQuestionText() == globals.getQuestionText()){
+                        for (UserVote user : question.getUser_vote_resp()){
+                            if (user != null) {
+                                userRecycleArrayList.add(user);
+                            }
+                        }
+                    //}
+                }
+                mAdapterUser.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        };
+
         databaseReference.child("groups")
                 .child(globals.getGroupName())
                 .child("questions")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //ez csinal egy masolatot es itt toltom le az adatokat
-                        for (DataSnapshot iter : dataSnapshot.getChildren()) {/**/
-                            Question question = iter.getValue(Question.class);
-                            if (question.getQuestionText() == globals.getQuestionText()){
-                                for (User user : question.getUser_resp()){
-                                    if (user != null) {
-                                        userRecycleArrayList.add(user);
-                                    }
-                                }
-                            }
-                        }
-
-                        mAdapterUser.notifyDataSetChanged();
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        //ha nem sikerul az adat lekerdezes
-                        throw databaseError.toException();
-                    }
-                });
+                .addValueEventListener(valueEventListener);
     }
 
     public void buildRecycleView(View view){

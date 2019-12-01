@@ -8,6 +8,10 @@ public class Globals {
 
     private String questionText;
 
+    private String userName;
+
+    private String lastVotedQuestion;
+
     // Restrict the constructor from being instantiated
     private Globals(){}
 
@@ -18,7 +22,7 @@ public class Globals {
         return this.groupName;
     }
 
-    public static synchronized Globals getInstance(){
+    public static Globals getInstance(){
         if(instance==null){
             instance=new Globals();
         }
@@ -28,7 +32,12 @@ public class Globals {
     public void setQuestionText(String text) {
         this.questionText = text;
     }
+
     public String getQuestionText(){
         return this.questionText;
     }
+    public void setUserName(String username) {this.userName = username; }
+    public String getUserName() { return this.userName; }
+    public String getLastVoted() { return this.lastVotedQuestion; }
+    public void setLastVotedQuestion(String vote) {this.lastVotedQuestion = vote;}
 }
