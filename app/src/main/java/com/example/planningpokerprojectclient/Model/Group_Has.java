@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.PropertyName;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Group_Has {
@@ -16,12 +17,12 @@ public class Group_Has {
     public String end_time;
 
     @PropertyName("questions")
-    public List<Question_Has> questions;
+    public HashMap<String,Question_Has> questions;
 
     public Group_Has() {
     }
 
-    public Group_Has(String start_time, String end_time, List<Question_Has> questionList){
+    public Group_Has(String start_time, String end_time, HashMap<String,Question_Has>  questionList){
         this.start_time = start_time;
         this.end_time = end_time;
         this.questions = questionList;
@@ -37,7 +38,7 @@ public class Group_Has {
         this.end_time = end_time;
     }
 
-    public void setQuestions(List<Question_Has> questionList) {
+    public void setQuestions(HashMap<String,Question_Has>  questionList) {
 
         this.questions = questionList;
     }
@@ -52,7 +53,7 @@ public class Group_Has {
         return this.end_time;
     }
 
-    public List<Question_Has> getQuestionList()
+    public HashMap<String,Question_Has>  getQuestionList()
     {
         return this.questions;
     }

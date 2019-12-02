@@ -19,7 +19,9 @@
         android:layout_height="83dp"
         android:layout_marginTop="32dp"
         android:text="TextView"
+        android:textSize="25dp"
         android:gravity="center"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,15 +75,6 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/one"
                         android:onClick="onClickVoteImage"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Me"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -106,18 +99,12 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:id="@+id/two"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/two" />
+                        android:src="@drawable/two"
+                        android:onClick="onClickVoteImage"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Family"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -145,18 +132,11 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:id="@+id/three"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/three" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Lovely"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:src="@drawable/three"
+                        android:onClick="onClickVoteImage"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -180,18 +160,12 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:id="@+id/five"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/five" />
+                        android:src="@drawable/five"
+                        android:onClick="onClickVoteImage"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Me"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -215,18 +189,11 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:id="@+id/eight"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/eight" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Me"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:src="@drawable/eight"
+                        android:onClick="onClickVoteImage"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -250,18 +217,12 @@
 
                         <ImageView
                             android:layout_width="wrap_content"
+                            android:id="@+id/thirteen"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/thirteen" />
+                            android:src="@drawable/thirteen"
+                            android:onClick="onClickVoteImage"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Me"
-                            android:textAlignment="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -285,18 +246,11 @@
 
                         <ImageView
                             android:layout_width="wrap_content"
+                            android:id="@+id/twentyone"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/twentyone" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Me"
-                            android:textAlignment="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:src="@drawable/twentyone"
+                            android:onClick="onClickVoteImage"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -320,18 +274,11 @@
 
                         <ImageView
                             android:layout_width="wrap_content"
+                            android:id="@+id/zero"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/zero" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Me"
-                            android:textAlignment="center"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:src="@drawable/zero"
+                            android:onClick="onClickVoteImage"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
         </GridLayout>

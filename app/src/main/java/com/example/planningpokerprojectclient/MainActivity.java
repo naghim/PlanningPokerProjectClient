@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Iterator;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
+    // On login button click: save the user, load the question if the user has't voted before.
     public void onLoginButtonClick(View view)
     {
         TextView username = view.findViewById(R.id.userNameEditText);
@@ -49,26 +52,31 @@ public class MainActivity extends AppCompatActivity {
 
         /////////////////////////////////////////////////////////////////////
 
-        mReference = FirebaseDatabase.getInstance().getReference();//ezzel ferunk hozza
+        mReference = FirebaseDatabase.getInstance().getReference(); // reference to the db
         mReference.child("groups")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        //ez csinal egy masolatot es itt toltom le az adatokat
                         boolean isActive = false;
                         boolean alreadyVoted = false;
                         for (DataSnapshot iter : dataSnapshot.getChildren()) {/**/
                             Group_Has group = iter.getValue(Group_Has.class);
                             if (iter.getKey().equals(globals.getGroupName())){
                                 isActive = true;
-                                for (Question_Has question : group.getQuestionList()){
-                                    if (question != null && question.is_active == 1){
-                                        Globals.getInstance().setQuestionText(question.question_txt);
+                                if (group.getQuestionList() != null){
+                                    Iterator myVeryOwnIterator = group.getQuestionList().keySet().iterator();
+                                    while(myVeryOwnIterator.hasNext()) {
+                                        String key=(String)myVeryOwnIterator.next();
+                                        Question_Has question=(Question_Has)group.getQuestionList().get(key);
+                                        if (question != null && question.is_active == 1){
+                                            globals.setQuestionText(question.question_txt);
+                                            globals.setCurrentQuestion(key);
+                                        }
                                     }
                                 }
                             }
                         }
-                        if (Globals.getInstance().getQuestionText() == globals.getLastVoted())
+                        if (globals.getQuestionText() == globals.getLastVoted())
                         {
                             alreadyVoted = true;
                         }
@@ -79,16 +87,17 @@ public class MainActivity extends AppCompatActivity {
                             ft.replace(R.id.fragment_place, new VoteFragment());
                             ft.addToBackStack(null);
                             ft.commit();
-                        }else{
+                        }
+                        else
+                        {
                             Toast.makeText(getApplicationContext(),
-                                    "This group doesn't exist or it has already expired.",
-                                    Toast.LENGTH_LONG).show();
+                                    "You have voted.", Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        //ha nem sikerul az adat lekerdezes
+                        // if the query doesn't succeed...
                         throw databaseError.toException();
                     }
                 });
@@ -96,17 +105,16 @@ public class MainActivity extends AppCompatActivity {
         /////////////////////////////////////////////////////////////////////
     }
 
+    // On image clicked: aka user voted. Gets the id of the picture and calls onVote function to insert vote.
     public void onClickVoteImage(View v)
     {
         String vote = v.getResources().getResourceName(v.getId());
         String[] separated = vote.split("/");
         vote = separated[1];
-//        Toast.makeText(v.getContext(),
-//                "You have selected: " + vote ,
-//                Toast.LENGTH_LONG).show();
-
         onVoteClick(vote);
     }
+
+    // Inserts vote and replaces fragment to show votes.
     public void onVoteClick(String vote)
     {
         databaseHelper.addVote(fromVoteToUserVote(vote),globals.getGroupName(),globals.getQuestionText());
@@ -117,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
+    // Converts from vote aka an id into a UserVote object.
     public UserVote fromVoteToUserVote(String vote){
         UserVote userVote = new UserVote();
         userVote.setName(globals.getUserName());
@@ -124,9 +133,28 @@ public class MainActivity extends AppCompatActivity {
             case "one" :
                 userVote.setValue(1);
                 break;
+            case "two":
+                userVote.setValue(2);
             case "three" :
+                userVote.setValue(3);
                 break;
-            case "" :
+            case "five" :
+                userVote.setValue(5);
+                break;
+            case "eight" :
+                userVote.setValue(8);
+                break;
+            case "thirteen" :
+                userVote.setValue(13);
+                break;
+            case "twentyone" :
+                userVote.setValue(21);
+                break;
+            case "zero" :
+                userVote.setValue(-1);
+                break;
+            default:
+                userVote.setValue(-1);
                 break;
         }
 

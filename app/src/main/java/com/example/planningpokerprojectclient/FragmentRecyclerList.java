@@ -28,7 +28,7 @@ import java.util.List;
 public class FragmentRecyclerList extends Fragment {
 
     private RecyclerView mMy_recycler_view_users;
-    private DatabaseReference databaseReference;//ramutatunk ezzel egy cimre
+    private DatabaseReference databaseReference; // a reference to the database
     private Globals globals;
     private RecyclerAdapter mAdapterUser;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -48,11 +48,13 @@ public class FragmentRecyclerList extends Fragment {
         return view;
     }
 
+    // Creates the RecylcerList
     public void createRecycleList(){
         this.userRecycleArrayList = new ArrayList<>();
         this.getAllData();
     }
 
+    // Queries the database for the votes.
     public void getAllData(){
         userRecycleArrayList.clear();
         databaseReference = FirebaseDatabase.getInstance().getReference();//ezzel ferunk hozza
@@ -63,14 +65,13 @@ public class FragmentRecyclerList extends Fragment {
 
                 for (DataSnapshot iter : dataSnapshot.getChildren()) {/**/
                     Question_Has question = iter.getValue(Question_Has.class);
-
-                   // if (question.getQuestionText() == globals.getQuestionText()){
-                        for (UserVote user : question.getUser_vote_resp()){
+                    if (question.getUser_vote_resp() != null){
+                        for (UserVote user : question.getUser_vote_resp().values()){
                             if (user != null) {
                                 userRecycleArrayList.add(user);
                             }
                         }
-                    //}
+                    }
                 }
                 mAdapterUser.notifyDataSetChanged();
             }
@@ -87,6 +88,7 @@ public class FragmentRecyclerList extends Fragment {
                 .addValueEventListener(valueEventListener);
     }
 
+    // Builds RecyclerView: Sets layouts and adapter. Sends list with data to the adapter.
     public void buildRecycleView(View view){
         mMy_recycler_view_users = view.findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(this.mContext);

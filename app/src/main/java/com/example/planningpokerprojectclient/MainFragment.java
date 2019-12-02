@@ -26,8 +26,6 @@ public class MainFragment extends Fragment {
     private Button mLoginButton;
     private EditText mGroupNameEditText;
 
-    // The onCreateView method is called when Fragment should create its View object hierarchy,
-    // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
@@ -35,6 +33,7 @@ public class MainFragment extends Fragment {
         mGroupNameEditText = view.findViewById(R.id.groupNameEditText);
         mLoginButton = view.findViewById(R.id.loginButton);
 
+        // Listener on the login button.
         mLoginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -43,14 +42,5 @@ public class MainFragment extends Fragment {
             }});
 
         return view;
-    }
-
-
-    // This event is triggered soon after onCreateView().
-    // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        // Setup any handles to view objects here
-        // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
     }
 }

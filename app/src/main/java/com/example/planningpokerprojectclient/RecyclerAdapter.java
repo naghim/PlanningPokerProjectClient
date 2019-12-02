@@ -45,7 +45,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         UserVote currentItem = mRecyclerItemArrayList.get(position);
         if (currentItem !=null){
             holder.mUserNameTextView.setText(currentItem.getName());
-            holder.mValueTextView.setText(String.valueOf(currentItem.getValue()));
+            holder.mValueTextView.setText(currentItem.getValue() == -1 ? "Coffee" : String.valueOf(currentItem.getValue()));
+            holder.mQuestionTextView.setText(Globals.getInstance().getQuestionText());
         }
     }
 

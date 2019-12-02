@@ -30,8 +30,8 @@ public class Question_Has {
         return this.user_resp;
     }
 
-    public Collection<UserVote> getUser_vote_resp(){
-        return this.user_resp.values();
+    public HashMap<String, UserVote> getUser_vote_resp(){
+        return this.user_resp;
     }
 
     public int getIsactive()

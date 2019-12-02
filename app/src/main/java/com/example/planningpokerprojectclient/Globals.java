@@ -1,9 +1,9 @@
 package com.example.planningpokerprojectclient;
 
+// Global variables
 public class Globals {
     private static Globals instance;
 
-    // Global variable
     private String groupName;
 
     private String questionText;
@@ -12,16 +12,20 @@ public class Globals {
 
     private String lastVotedQuestion;
 
-    // Restrict the constructor from being instantiated
+    public String getCurrentQuestion() {
+        return currentQuestion;
+    }
+
+    public void setCurrentQuestion(String currentQuestion) {
+        this.currentQuestion = currentQuestion;
+    }
+
+    private String currentQuestion;
+
+    // Restricts the constructor from being instantiated.
     private Globals(){}
 
-    public void setGroupName(String data){
-        this.groupName=data;
-    }
-    public String getGroupName(){
-        return this.groupName;
-    }
-
+    // Get the instance. It is a singleton class...
     public static Globals getInstance(){
         if(instance==null){
             instance=new Globals();
@@ -29,15 +33,18 @@ public class Globals {
         return instance;
     }
 
+    // Getters and setters...
+    public void setGroupName(String data){
+        this.groupName=data;
+    }
+    public String getGroupName(){ return this.groupName; }
     public void setQuestionText(String text) {
         this.questionText = text;
     }
-
-    public String getQuestionText(){
-        return this.questionText;
-    }
+    public String getQuestionText(){ return this.questionText; }
     public void setUserName(String username) {this.userName = username; }
     public String getUserName() { return this.userName; }
     public String getLastVoted() { return this.lastVotedQuestion; }
     public void setLastVotedQuestion(String vote) {this.lastVotedQuestion = vote;}
+
 }
